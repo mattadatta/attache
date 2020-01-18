@@ -1,0 +1,26 @@
+{:source-paths
+ ["src"]
+
+ :dependencies
+ [[cider/cider-nrepl "0.22.4"]
+  [appliedscience/js-interop "0.1.21"]
+  [inflections "0.13.2"]
+  [com.andrewmcveigh/cljs-time "0.5.2"]]
+
+ :builds
+ {:main
+  {:target :node-script
+   :output-to "app/main.js"
+   :main attache.main.core/main}
+
+  :landing
+  {:target :browser
+   :output-dir "app/js"
+   :asset-path "js"
+
+   :modules
+   {:landing {:entries [attache.landing.core]}}
+
+   :devtools
+   {:before-load attache.landing.core/stop
+    :after-load attache.landing.core/start}}}}

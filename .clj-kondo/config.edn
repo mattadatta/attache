@@ -1,0 +1,1 @@
+{:lint-as {xenery.core/defnc clojure.core/defn}}
