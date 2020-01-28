@@ -2,9 +2,7 @@
   (:require 
    ["electron" :as e :refer [app BrowserWindow globalShortcut]]
    ["path" :as path]
-   ["url" :as url]
-   
-   [applied-science.js-interop :as j]))
+   ["url" :as url]))
 
 (defonce win-ref (atom nil))
 
@@ -13,7 +11,7 @@
         (BrowserWindow. #js {:width 800
                              :height 600
                              :webPreferences
-                             #js {:scrollBounce true}})
+                             #js {:scrollBounce false}})
 
         url
         (url/format #js {:pathname (path/join js/__dirname "index.html")

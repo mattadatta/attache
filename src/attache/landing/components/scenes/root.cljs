@@ -1,8 +1,16 @@
 (ns attache.landing.components.scenes.root
   (:require
-   [xenery.core :as xe :refer [defnc]]
-   ["@material-ui/core/Button" :default Button]
-   ["@material-ui/core/Paper" :default Paper]))
+   [xenery.core :as xe :refer [defnc set-state!]]))
+
+(defnc RecentsListItem
+  [_ {:keys [clicked?]}]
+  {:state {:clicked? false}}
+  [:div
+   {:style
+    {:height 50
+     :margin-bottom 8
+     :background-color (if clicked? "red" "cyan")}
+    :on-click (set-state! :clickedd? not)}])
 
 (defnc RecentsList
   [_]
@@ -10,53 +18,15 @@
    {:style
     {:position "absolute"
      :left 0 :top 0 :right 0 :bottom 0}}
-   [:div
-    {:style
-     {:position "absolute"
-      :left 0 :top 0 :right 0 :bottom 0
-      :padding 14
-      :overflowX "hidden"
-      :overflowY "scroll"}}
+   (into
     [:div
      {:style
-      {:height 50
-       :margin-bottom 8
-       :background-color "cyan"}}]
-    [:div
-     {:style
-      {:height 50
-       :margin-bottom 8
-       :background-color "cyan"}}]
-    [:div
-     {:style
-      {:height 50
-       :margin-bottom 8
-       :background-color "cyan"}}]
-    [:div
-     {:style
-      {:height 50
-       :margin-bottom 8
-       :background-color "cyan"}}]
-    [:div
-     {:style
-      {:height 50
-       :margin-bottom 8
-       :background-color "cyan"}}]
-    [:div
-     {:style
-      {:height 50
-       :margin-bottom 8
-       :background-color "cyan"}}]
-    [:div
-     {:style
-      {:height 50
-       :margin-bottom 8
-       :background-color "cyan"}}]
-    [:div
-     {:style
-      {:height 50
-       :margin-bottom 8
-       :background-color "cyan"}}]]])
+      {:position "absolute"
+       :left 0 :top 0 :right 0 :bottom 0
+       :padding 14
+       :overflowX "hidden"
+       :overflowY "scroll"}}]
+    (repeat 20 [RecentsListItem]))])
 
 (defnc RecentsPanel
   [{:keys [style]}]

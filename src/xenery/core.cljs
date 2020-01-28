@@ -2,6 +2,7 @@
   (:require
    ["react" :as React]
    
+   [xenery.hooks.state]
    [xenery.util :as util])
   (:require-macros
    [xenery.core]))
