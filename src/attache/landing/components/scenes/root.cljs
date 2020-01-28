@@ -1,18 +1,18 @@
 (ns attache.landing.components.scenes.root
   (:require
-   [xenery.core :as xe :refer [defnc set-state!]]))
+   [xenery.core :as xe :refer [defnx]]))
 
-(defnc RecentsListItem
-  [_ {:keys [clicked?]}]
+(defnx RecentsListItem
+  [_ {:keys [clicked?]} {:keys [set-clicked?]}]
   {:state {:clicked? false}}
   [:div
    {:style
     {:height 50
      :margin-bottom 8
      :background-color (if clicked? "red" "cyan")}
-    :on-click (set-state! :clickedd? not)}])
+    :on-click #(set-clicked? not)}])
 
-(defnc RecentsList
+(defnx RecentsList
   [_]
   [:div
    {:style
@@ -28,7 +28,7 @@
        :overflowY "scroll"}}]
     (repeat 20 [RecentsListItem]))])
 
-(defnc RecentsPanel
+(defnx RecentsPanel
   [{:keys [style]}]
   [:div
    {:style
@@ -52,7 +52,7 @@
       :position "relative"}}
     [RecentsList]]])
 
-(defnc Root
+(defnx Root
   [_]
   [:div
    {:style

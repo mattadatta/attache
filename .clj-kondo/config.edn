@@ -1,1 +1,1 @@
-{:lint-as {xenery.core/defnc clojure.core/defn}}
+{:lint-as {xenery.core/defnx clojure.core/defn}}

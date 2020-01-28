@@ -1,15 +1,13 @@
 (ns xenery.core)
 
-(defn- fnc* [n [params & body]]
+(defn- fnx* [n [params & body]]
   (let [attrs
-        (when (and (next body) (map? (first body)))
-          (first body))
+        (or (when (and (next body) (map? (first body)))
+              (first body)) 
+            (meta params))
 
         body
         (if attrs (next body) body)
-
-        attrs
-        (or attrs (meta params))
 
         state
         (when (map? (:state attrs))
@@ -42,7 +40,7 @@
        (goog.object/set func# "displayName" ~(str *ns* "/" n))
        func#)))
 
-(defmacro fnc [& sig]
+(defmacro fnx [& sig]
   (let [name
         (if (symbol? (first sig))
           (first sig)
@@ -52,11 +50,11 @@
         
         sig
         (if (symbol? (first sig)) (rest sig) sig)]
-    (fnc* name sig)))
+    (fnx* name sig)))
 
-(defmacro defnc [& sig]
+(defmacro defnx [& sig]
   (let [name (first sig)]
-    `(def ~name ~(fnc* name (rest sig)))))
+    `(def ~name ~(fnx* name (rest sig)))))
 
 (defmacro set-state! [k v]
   (let [name
