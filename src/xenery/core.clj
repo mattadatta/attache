@@ -2,12 +2,14 @@
 
 (defn- fnx* [n [params & body]]
   (let [attrs
-        (or (when (and (next body) (map? (first body)))
-              (first body)) 
-            (meta params))
+        (when (and (next body) (map? (first body)))
+          (first body))
 
         body
         (if attrs (next body) body)
+
+        attrs
+        (or attrs (meta params))
 
         state
         (when (map? (:state attrs))
