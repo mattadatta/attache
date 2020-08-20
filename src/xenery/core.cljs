@@ -2,7 +2,8 @@
   (:require
    ["react" :as React]
    
-   [xenery.hooks.state]
+   [xenery.hooks.react]
+
    [xenery.util :as util])
   (:require-macros
    [xenery.core]))
@@ -18,6 +19,39 @@
     (name tag)))
 
 (register-tag! :<> React/Fragment)
+
+(defn default-error-renderer
+  ([e ee]
+   [:div
+    {:style
+     {:background-color "rgba(154,60,60,1)"}}
+    [:span
+     {:style
+      {:font-family "Montserrat"
+       :font-size 16
+       :color "rgba(255,255,255,1)"
+       :text-align "left"}}
+     (str "Error: " e "\nAlso got error using default error renderer: " ee)]])
+  ([e]
+   [:div
+    {:style
+     {:background-color "rgba(154,60,60,1)"}}
+    [:span
+     {:style
+      {:font-family "Montserrat"
+       :font-size 16
+       :color "rgba(255,255,255,1)"
+       :text-align "left"}}
+     (str "Error: " e)]]))
+
+(defonce -error-renderer (atom default-error-renderer))
+
+(defn error-renderer []
+  (or @-error-renderer default-error-renderer))
+
+(defn set-error-renderer! [f]
+  (assert (fn? f) "Supplied error-renderer is not a function")
+  (reset! -error-renderer f))
 
 (declare vec-to-elem)
 
