@@ -2,7 +2,7 @@
   (:require
    ["react" :as React]))
 
-(defn useState
+(defn use-state
   [initial]
   (let [[state set-state]
         (React/useState initial)
@@ -29,13 +29,13 @@
         x
         js/undefined))))
 
-(defn useEffect
+(defn use-effect
   ([f]
    (React/useEffect (wrap-effect f) #js []))
   ([f deps]
    (React/useEffect (wrap-effect f) (to-array deps))))
 
-(defn useLayoutEffect
+(defn use-layout-effect
   ([f] 
    (React/useLayoutEffect (wrap-effect f) #js []))
   ([f deps] 

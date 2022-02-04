@@ -2,8 +2,8 @@
  ["src"]
 
  :dependencies
- [[cider/cider-nrepl "0.22.4"]
-  [appliedscience/js-interop "0.1.21"]
+ [[cider/cider-nrepl "0.25.3"]
+  [applied-science/js-interop "0.2.7"]
   [inflections "0.13.2"]
   [com.andrewmcveigh/cljs-time "0.5.2"]]
 

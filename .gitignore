@@ -5,7 +5,9 @@
 # And these
 .shadow-cljs/
 /app/
-clj-kondo
+.clj-kondo/
+.calva/
+.lsp/
 **/.clj-kondo/.cache
 clj-kondo*.snap
 

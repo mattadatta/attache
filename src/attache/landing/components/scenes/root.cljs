@@ -1,27 +1,38 @@
 (ns attache.landing.components.scenes.root
   (:require
+   [applied-science.js-interop :as j]
    [xenery.core :as xe :refer [defnx]]
    [xenery.rx.obs :as rxc]
    [xenery.rx.ops :as rxo]
    [xenery.rx.util-ops]
+   [xenery.hooks.react :as hr]
    [xenery.hooks.rx :as hrx]))
 
+(defnx InputBox
+  [{:keys []}]
+  (let [[text set-text] (hr/use-state "")]
+    [:input
+     {:type "text"
+      :name "Things"
+      :value text
+      :on-change #(-> % (j/get-in [:target :value]) set-text)}]))
+
 (defnx RecentsListItem
-  [{:keys [item-key]} {:keys [clicked?]} {:keys [set-clicked?]}]
-  {:state {:clicked? false}}
-  [:div
-   {:style
-    {:height 50
-     :margin-bottom 8
-     :background-color (if clicked? "red" "cyan")}
-    :on-click #(set-clicked? not)}
-   [:span
-    {:style
-     {:margin-left 4 :margin-bottom 8
-      :font-family "Alfa Slab One"
-      :font-size 28
-      :text-align "left"}}
-    (str "Item: " item-key)]])
+  [{:keys [item-key]}]
+  (let [[is-clicked? set-clicked] (hr/use-state false)]
+    [:div
+     {:style
+      {:height 50
+       :margin-bottom 8
+       :background-color (if is-clicked? "red" "cyan")}
+      :on-click #(set-clicked not)}
+     [:span
+      {:style
+       {:margin-left 4 :margin-bottom 8
+        :font-family "Alfa Slab One"
+        :font-size 28
+        :text-align "left"}}
+      (str "Item: " item-key)]]))
 
 (defnx RecentsList
   [_]
@@ -38,7 +49,7 @@
        :overflow-x "hidden"
        :overflow-y "scroll"}
       :on-scroll nil}]
-    (repeat 20 [RecentsListItem]))])
+    (map #(do [RecentsListItem {:item-key (str %)}]) (range 20)))])
 
 (defnx RecentsPanel
   [{:keys [style]}]
@@ -74,7 +85,7 @@
      :background-color "rgba(32,32,32,255)"}}
    [:div
     {:style
-     {:flex (/ 3 10)
+     {:flex 3
       :display "flex"
       :flex-direction "column"
       :align-items "center"
@@ -95,8 +106,12 @@
      "a graphical remote debugger for Nintendo Switch"]]
    [:div
     {:style
+     {:flex 1}}
+    [InputBox]]
+   [:div
+    {:style
      {:display "flex"
-      :flex (/ 7 10)}}
+      :flex 7}}
     [:div
      {:style
       {:flex 1

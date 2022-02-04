@@ -64,15 +64,17 @@
         state
         (when (map? (:state attrs))
           (:state attrs))
+        
+        js-props* (gensym "js-props")
 
         props-binding
         (if (or (= (first params) '_)
                 (nil? (first params)))
           'nil
-          `(xenery.util/shallow-props->clj ~(symbol "**js-props**")))]
+          `(xenery.util/shallow-props->clj ~js-props*))]
 
     `(let [func#
-           (fn ~n [~(symbol "**js-props**")]
+           (fn ~n [~js-props*]
              ~(if state
                 `(let [state-hooks#
                        (->> ~state
